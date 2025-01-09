@@ -1,16 +1,60 @@
-# next_kick
+# NextKick
+[![Dart](https://img.shields.io/badge/Dart-%230175C2.svg?logo=dart&logoColor=white)](#)
+[![Flutter](https://img.shields.io/badge/Flutter-02569B?logo=flutter&logoColor=fff)](#)
 
-A new Flutter project.
+NextKick is a Flutter application designed for tracking football drill practices. The app features user authentication, drill management, progress tracking, and a global leaderboard system.
 
-## Getting Started
+## ⚡️ Features
+- User Authentication with session persistence
+- Responsive UI design for both Android and iOS
+- Football drill catalog with detailed information
+- Personal progress tracking dashboard
+- Global leaderboard system
+- Offline support with data synchronization
 
-This project is a starting point for a Flutter application.
+## 👩‍💻 Technologies Used
+- **Flutter**: For cross-platform UI/UX
+- **Dart**: Programming language
+- **REST APIs**: Backend integration
 
-A few resources to get you started if this is your first Flutter project:
+## Snapshots
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+<table>
+  <tr>
+    <td><img src="screenshots/1.png" width="180"/></td>
+    <td><img src="screenshots/2.png" width="180"/></td>
+    <td><img src="screenshots/3.png" width="180"/></td>
+    <td><img src="screenshots/4.png" width="180"/></td>
+  </tr>
+  <tr>
+    <td><img src="screenshots/5.png" width="180"/></td>
+    <td><img src="screenshots/6.png" width="180"/></td>
+    <td><img src="screenshots/7.png" width="180"/></td>
+    <td><img src="screenshots/8.png" width="180"/></td>
+  </tr>
+   <tr>
+    <td><img src="screenshots/9.png" width="180"/></td>
+    <td><img src="screenshots/10.png" width="180"/></td>
+  </tr>
+</table>
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+## ⏳ Installation
+
+1. Clone the repository:
+   ```
+   git clone https://github.com/SanjayKParida/next-kick.git
+   ```
+2. Navigate to the project directory:
+   ```
+   cd next-kick
+   ```
+3. Install dependencies:
+   ```
+   flutter pub get
+   ```
+
+5. Run the app:
+   ```
+   flutter run
+   ```
+   

@@ -1,58 +1,108 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:next_kick/core/theme/theme.dart';
 import 'package:next_kick/view/home/home_screen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-
+import 'package:next_kick/view/authentication/login_screen.dart';
 import 'provider/user_provider.dart';
-import 'view/authentication/login_screen.dart';
 
-void main() {
-  //RUN THE FLUTTER APP WRAPPED IN A PROVIDER SCOPE
+// Initialize app-level services
+Future<void> initializeApp() async {
+  WidgetsFlutterBinding.ensureInitialized();
+}
+
+void main() async {
+  await initializeApp();
   runApp(const ProviderScope(child: MyApp()));
 }
 
-//ROOT WIDGET OF THE APPLICATION WILL BE A CONSUMER WIDGET
-//IN ORDER TO CONSUME STATE CHANGE
-class MyApp extends ConsumerWidget {
+class MyApp extends ConsumerStatefulWidget {
   const MyApp({super.key});
 
-  //METHOD TO CHECK THE TOKEN AND SET THE USER DATA IF AVAILABLE
-  Future<void> _checkTokenAndSetUser(WidgetRef ref) async {
-    //CREATING AN INSTANCE OF SHARED PREFERENCES FOR LOCAL DATA STORAGE
-    SharedPreferences prefs = await SharedPreferences.getInstance();
+  @override
+  ConsumerState<MyApp> createState() => _MyAppState();
+}
 
-    //RETRIEVE THE AUTH TOKEN AND USER DATA STORED LOCALLY
-    String? token = prefs.getString('auth_token');
-    String? userJson = prefs.getString('user');
+class _MyAppState extends ConsumerState<MyApp> {
+  bool _isInitialized = false;
 
-    //IF BOTH TOKEN AND USER DATA AVAILABLE, THEN UPDATE THE STATE
-    if (token != null && userJson != null) {
-      ref.read(userProvider.notifier).setUser(userJson);
-    } else {
+  @override
+  void initState() {
+    super.initState();
+    _initializeApp();
+  }
+
+  Future<void> _initializeApp() async {
+    await _checkTokenAndSetUser();
+    setState(() {
+      _isInitialized = true;
+    });
+  }
+
+  Future<void> _checkTokenAndSetUser() async {
+    try {
+      SharedPreferences prefs = await SharedPreferences.getInstance();
+      String? token = prefs.getString('auth_token');
+      String? userJson = prefs.getString('user');
+
+      if (token != null && userJson != null) {
+        ref.read(userProvider.notifier).setUser(userJson);
+      } else {
+        ref.read(userProvider.notifier).signOut();
+      }
+    } catch (e) {
+      debugPrint('Error initializing app: $e');
       ref.read(userProvider.notifier).signOut();
     }
   }
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Market Sphere',
-      theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.blue),
-        useMaterial3: true,
-      ),
-      home: FutureBuilder(
-        future: _checkTokenAndSetUser(ref),
-        builder: (context, snapshots) {
-          if (snapshots.connectionState == ConnectionState.waiting) {
-            return const Center(
-              child: CircularProgressIndicator(),
+      theme: buildTheme(),
+      home: !_isInitialized
+          ? const _LoadingScreen()
+          : Consumer(
+              builder: (context, ref, _) {
+                final user = ref.watch(userProvider);
+                return user != null ? const HomeScreen() : const LoginScreen();
+              },
+            ),
+      onGenerateRoute: (settings) {
+        // Add your route generation logic here
+        switch (settings.name) {
+          case '/login':
+            return MaterialPageRoute(
+              builder: (_) => const LoginScreen(),
+              settings: settings,
             );
-          }
-          final user = ref.watch(userProvider);
-          return user != null ? const HomeScreen() : const LoginScreen();
-        },
+          case '/home':
+            return MaterialPageRoute(
+              builder: (_) => const HomeScreen(),
+              settings: settings,
+            );
+          // Add other routes as needed
+          default:
+            return MaterialPageRoute(
+              builder: (_) => const LoginScreen(),
+              settings: settings,
+            );
+        }
+      },
+    );
+  }
+}
+
+class _LoadingScreen extends StatelessWidget {
+  const _LoadingScreen();
+
+  @override
+  Widget build(BuildContext context) {
+    return const Scaffold(
+      body: Center(
+        child: CircularProgressIndicator(),
       ),
     );
   }

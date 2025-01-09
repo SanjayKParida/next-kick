@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart' as http;
-import '../constants/constants.dart';
+import '../core/constants/constants.dart';
 import '../provider/user_provider.dart';
 import '../services/snackbar_service.dart';
 import '../view/authentication/login_screen.dart';

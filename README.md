@@ -2,7 +2,8 @@
 [![Dart](https://img.shields.io/badge/Dart-%230175C2.svg?logo=dart&logoColor=white)](#)
 [![Flutter](https://img.shields.io/badge/Flutter-02569B?logo=flutter&logoColor=fff)](#)
 
-NextKick is a Flutter application designed for tracking football drill practices. The app features user authentication, drill management, progress tracking, and a global leaderboard system.
+- NextKick is a Flutter application designed for tracking football drill practices. The app features user authentication, drill management, progress tracking, and a global leaderboard system.
+- For the backend part: [![](https://github.com/SanjayKParida/next-kick-backend)](https://github.com/SanjayKParida/next-kick-backend)
 
 ## ⚡️ Features
 - User Authentication with session persistence

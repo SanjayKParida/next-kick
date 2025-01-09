@@ -6,7 +6,7 @@ NextKick is a Flutter application designed for tracking football drill practices
 
 ## ⚡️ Features
 - User Authentication with session persistence
-- Responsive UI design for both Android and iOS
+- Responsive UI design for mobile platform.
 - Football drill catalog with detailed information
 - Personal progress tracking dashboard
 - Global leaderboard system
